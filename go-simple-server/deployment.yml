@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: go-server-from-scratch
+  labels:
+    app: simple-server-go
+spec:
+  containers:
+    - image: arunhiremath92/simple-go-server2:latest2
+      name: simple-server-go
