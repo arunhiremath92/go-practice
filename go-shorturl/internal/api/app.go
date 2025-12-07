@@ -2,9 +2,13 @@ package api
 
 import (
 	"context"
+	"fmt"
 	"log"
 	"net/http"
+	"os"
 	"time"
+
+	"github.com/redis/go-redis/v9"
 )
 
 type UrlShortner interface {
@@ -19,16 +23,37 @@ type AppConfig struct {
 }
 
 type App struct {
-	config AppConfig
-	server *http.Server
+	RedisStore *redis.Client
+	config     AppConfig
+	server     *http.Server
 }
 
 func NewApp(appConfig AppConfig) *App {
 
+	var redisOpt *redis.Options
 	mux := http.NewServeMux()
 	app := App{config: appConfig}
 	app.registerRoutesv1(mux)
+	redisUrl := os.Getenv("REDIS_URL")
+	if redisUrl == "" {
+		fmt.Println("using local redis instance")
+		redisOpt = &redis.Options{
+			Addr: "redis:6379",
+			DB:   0,
+		}
+	}
 
+	if redisUrl != "" {
+
+		var err error
+		redisOpt, err = redis.ParseURL(redisUrl)
+		if err != nil {
+			os.Exit(-1)
+		}
+
+	}
+
+	app.RedisStore = redis.NewClient(redisOpt)
 	app.server = &http.Server{
 		Addr:              app.config.Addr,
 		Handler:           app.withMiddleware(mux),

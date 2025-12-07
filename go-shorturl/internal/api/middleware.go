@@ -7,7 +7,13 @@ import (
 )
 
 func (app *App) withMiddleware(next http.Handler) http.Handler {
-	return app.recoveryMiddleware(app.loggingMiddleware(next))
+	limiter := RateLimitMiddleware(RateLimiterConfig{
+		Client: app.RedisStore,
+		Limit:  10,
+		Rate:   1,
+	})
+
+	return limiter(app.recoveryMiddleware(app.loggingMiddleware(next)))
 }
 
 func (a *App) loggingMiddleware(next http.Handler) http.Handler {
