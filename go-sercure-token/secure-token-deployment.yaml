@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: gosecuretoken
+spec:
+  replicas: 4
+  selector:
+    matchLabels:
+      app: gosecuretoken
+  template:
+    metadata:
+      labels:
+        app: gosecuretoken
+    spec:
+      containers:
+      - name: gosecuretoken
+        image: gosecuretoken:latest # Replace with your image name and tag
+        imagePullPolicy: Never
+        ports:
+        - containerPort: 8080

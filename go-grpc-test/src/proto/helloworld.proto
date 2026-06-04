@@ -1,0 +1,19 @@
+syntax = "proto3";
+package helloworld;
+option go_package = "com/arunhiremath/go-grpc-test/pb";
+
+service Greeter {
+    rpc SayHello(HelloRequest) returns (HelloReply) {}
+}
+
+service DataHandler {
+    rpc SendACK(HelloRequest) returns (HelloReply){}
+}
+
+message HelloRequest {
+    string name = 1;
+}
+
+message HelloReply {
+    string name = 1;
+}
