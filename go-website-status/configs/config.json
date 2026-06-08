@@ -1,15 +1,25 @@
 {
+ 
+ "notification":{
+ 	"webhooks":[
+		{
+			"name":"Discord",
+			"url":"https://discord.com/api/webhooks/YOUR_WEBHOOK_ID/YOUR_WEBHOOK_TOKEN"
+		}
+	]
+ },
  "websites":[
 	 {
-		 "name":"google.com"
+		 "name":"https://google.com",
+		 "interval":3
 	 },
-
 	 {
-		 "name":"microsoft.com"
+		 "name":"https://microsoft.com",
+		 "interval":1
 	 },
-
 	 {
-		 "name":"stackoverflow.com"
+		 "name":"https://stackoverflow.com",
+		  "interval":1
 	 }
  ]
 }
