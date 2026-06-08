@@ -1,0 +1,13 @@
+go 1.26.1
+
+use (
+	./go-grpc-test/src
+	./go-lru
+	./go-messenger/mongodb-client
+	./go-messenger/postgres-client
+	./go-pg-test
+	./go-sercure-token
+	./go-shorturl
+	./go-tcp-chat
+	./go-website-status
+)
